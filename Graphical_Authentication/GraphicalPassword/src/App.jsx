@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import swal from 'sweetalert';
 import img1 from './assets/1.png'
 import img2 from './assets/2.jpg'
 import img3 from './assets/3.jpg'
@@ -13,14 +14,17 @@ class App extends Component {
     super()
     this.shuffleImages = this.shuffleImages.bind(this)
   }
+  componentDidMount = () =>{
+    this.shuffleImages()
+  }
   state = {
     images: {
       'computer': img1,
       'trailer': img2,
       'house': img3,
-      'car': img4,
+      'baby': img4,
       'plane': img5,
-      'dog': img6,
+      'puppies': img6,
       'cat': img7,
       'bird': img8,
       'baby': img9
@@ -29,7 +33,8 @@ class App extends Component {
       firstImage:'',
       secondImage:'',
       thirdImage:''
-    }
+    },
+    username:''
   }
   shuffleObject(obj) {
     const entries = Object.entries(obj);
@@ -53,9 +58,34 @@ class App extends Component {
   }
   handleSubmit  = (e)=>{
     e.preventDefault();
-    //get the value of the images 
-    const firstImage = document.querySelector('input[name="firstImage"]').value
-    // console.log(firstImage)
+    if(!this.state.username){
+      swal("Oops!", "You must fill in the username", "error")
+      return;
+    }
+    //get the value of the images from their states
+    const firstImage = document.querySelector('img#image-0').getAttribute('value');
+    const secondImage = document.querySelector('img#image-1').getAttribute('value');
+    const thirdImage = document.querySelector('img#image-2').getAttribute('value');
+    if(firstImage===this.state.imagesValues.firstImage && secondImage===this.state.imagesValues.secondImage && thirdImage===this.state.imagesValues.thirdImage){
+      swal(`Congratulations ${this.state.username}`, "You have succesfully passed Graphical Authentication", "success")
+      //clear the fields
+      this.setState({
+        imagesValues:{
+          firstImage:'',
+          secondImage:'',
+          thirdImage:''
+        },
+        username:''
+      })
+      this.shuffleImages()
+    }else{
+      swal("Oops!", "You have failed In matching one or more images. Please try again", "error")
+    }
+  }
+  handleFormFieldChange = ({currentTarget:input}) => {
+    let username = {...this.state.username}
+    username = input.value
+    this.setState({username})
   }
   handleChange = ({currentTarget:input})=>{
     const imagesValues = {...this.state.imagesValues}
@@ -71,15 +101,15 @@ class App extends Component {
             <form action="" className='w-[70%] m-auto text-sm shadow-xl p-2 bg-gray-200 flex flex-col gap-2 items-start' onSubmit={(e) => this.handleSubmit(e)}>
               <div className="form-group p-2">
                 <label htmlFor="" className="label-control">Username</label>
-                <input type="text" name="" id="" className="form-control p-2" />
+                <input type="text" name="username" id="" className="form-control p-2" value={this.state.username}  onChange={this.handleFormFieldChange} />
               </div>
-              <div className="graphical-password">
+              <div className="graphical-password ">
                 <div className="text-center">
                   Graphical Password
                 </div>
                 <div className="w-full">
                   <div className="flex flex-row justify-between items-center">
-                    <div className="w-[50%] grid md:grid-cols-3 grid-rows-3">
+                    <div className="w-[50%] grid md:grid-cols-3 grid-rows-3 gap-0">
                       {Object.keys(this.state.images).map((image,index)=>(
                         index<=2 ? (
                           <div className="object-fit w-[90px] h-[60px]" key={index}>
