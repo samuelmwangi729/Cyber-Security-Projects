@@ -1,0 +1,10 @@
+sudo apt update
+sudo apt install -y build-essential libssl-dev libmagic-dev libtool make gcc pkg-config libprotobuf-dev
+wget https://github.com/VirusTotal/yara/ar...
+tar -xzvf v4.2.1.tar.gz
+cd yara-4.2.1/
+./bootstrap.sh
+./configure --enable-macho --enable-magic --enable-dex
+make -j 4
+sudo make install
+sudo ldconfig
