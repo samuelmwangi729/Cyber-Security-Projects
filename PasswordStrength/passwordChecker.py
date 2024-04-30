@@ -45,9 +45,13 @@ def printLine():
     for i in range(0,47):
         print("_",end="")
     print("\n")
-printBanner()
-print("\n This Program is designed to rate your password")
-printBanner()
-password = input("\nEnter the password:\n")
-passwordValidate(password)
-printBanner()
+try:
+    printBanner()
+    print("\n This Program is designed to rate your password")
+    printBanner()
+    password = input("\nEnter the password:\n")
+    passwordValidate(password)
+    printBanner()
+except KeyboardInterrupt:
+    print("\n[+] Cancelled by User")
+    exit()

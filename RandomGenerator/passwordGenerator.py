@@ -6,7 +6,7 @@ to allow different passwords to be generated that are strong
 '''
 class RandomGenerator():
     def __init__(self):
-        print("Launcing the Random Password Generator")
+        print("Launching the Random Password Generator")
     def Generate(self, pass_length):
         #for a random password, there must be alphabets, uppercase,lowercase, numbers and also 
         #special symbols 
