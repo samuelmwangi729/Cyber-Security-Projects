@@ -1,5 +1,5 @@
 # Project Title 
-A brief description of your project.
+This is the readme.md. Go through the projects, I am lazy to write the descriptions on all of them
 
 ## Getting Started
 Instructions on how to get a copy of the project up and running on your local machine.
